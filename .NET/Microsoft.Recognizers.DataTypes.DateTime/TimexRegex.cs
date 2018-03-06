@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.Recognizers.DataTypes.DateTime
@@ -27,7 +26,6 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
                     new Regex(@"^XXXX-(?<month>\d\d)-WXX-(?<weekOfMonth>\d)-(?<dayOfWeek>\d)$")
                 }
             },
-
             {
                 "time", new Regex[]
                 {
@@ -39,7 +37,6 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
                     new Regex(@"^T(?<partOfDay>DT|NI|MO|AF|EV)$")
                 }
             },
-
             {
                 "period", new Regex[]
                 {

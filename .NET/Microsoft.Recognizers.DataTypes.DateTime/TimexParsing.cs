@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Microsoft.Recognizers.DataTypes.DateTime
 {
@@ -34,45 +32,38 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
         {
             var extracted = new Dictionary<string, string>();
             TimexRegex.Extract("period", s, extracted);
-            if (extracted.ContainsKey("dateUnit"))
-            {
-                ExtractDateUnit(extracted, obj);
-            }
-            else if (extracted.ContainsKey("timeUnit"))
-            {
-                ExtractTimeUnit(extracted, obj);
-            }
+            obj.AssignProperties(extracted);
         }
 
-        private static void ExtractDateUnit(IDictionary<string, string> extracted, Timex obj)
+        private static void ExtractStartEndRange(string s, Timex obj)
         {
-            switch (extracted["dateUnit"])
+            var parts = s.Substring(1, s.Length - 2).Split(',');
+
+            if (parts.Length == 3)
             {
-                case "Y":
-                    obj.Years = int.Parse(extracted["amount"]);
-                    break;
-                case "M":
-                    obj.Months = int.Parse(extracted["amount"]);
-                    break;
-                case "W":
-                    obj.Weeks = int.Parse(extracted["amount"]);
-                    break;
-                case "D":
-                    obj.Days = int.Parse(extracted["amount"]);
-                    break;
+                ExtractDateTime(parts[0], obj);
+                ExtractDuration(parts[2], obj);
             }
         }
 
-        private static void ExtractTimeUnit(IDictionary<string, string> extracted, Timex obj)
+        private static void ExtractDateTime(string s, Timex obj)
         {
+            var indexOfT = s.IndexOf('T');
+
+            if (indexOfT == -1)
+            {
+                var extracted = new Dictionary<string, string>();
+                TimexRegex.Extract("date", s, extracted);
+                obj.AssignProperties(extracted);
+            }
+            else
+            {
+                var extracted = new Dictionary<string, string>();
+                TimexRegex.Extract("date", s.Substring(0, indexOfT), extracted);
+                TimexRegex.Extract("time", s.Substring(indexOfT), extracted);
+                obj.AssignProperties(extracted);
+            }
         }
 
-        private static void ExtractStartEndRange(string timex, Timex obj)
-        {
-        }
-
-        private static void ExtractDateTime(string timex, Timex obj)
-        {
-        }
     }
 }

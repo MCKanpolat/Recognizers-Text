@@ -5,8 +5,4 @@
     <Copyright>Copyright ©  2017</Copyright>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="TimeRegex.cs" />
-  </ItemGroup>
-
 </Project>
