@@ -17,7 +17,7 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
                     // daterange
                     new Regex(@"^(?<year>\d\d\d\d)$"),
                     new Regex(@"^(?<year>\d\d\d\d)-(?<month>\d\d)$"),
-                    new Regex(@"^(<season>SP|SU|FA|WI)$"),
+                    new Regex(@"^(?<season>SP|SU|FA|WI)$"),
                     new Regex(@"^(?<year>\d\d\d\d)-(?<season>SP|SU|FA|WI)$"),
                     new Regex(@"^(?<year>\d\d\d\d)-W(?<weekOfYear>\d\d)$"),
                     new Regex(@"^(?<year>\d\d\d\d)-W(?<weekOfYear>\d\d)-(?<weekend>WE)$"),

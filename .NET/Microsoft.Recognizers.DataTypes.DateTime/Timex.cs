@@ -41,19 +41,19 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
 
         public bool? Now { get; set; }
 
-        public int? Years { get; set; }
+        public decimal? Years { get; set; }
 
-        public int? Months { get; set; }
+        public decimal? Months { get; set; }
 
-        public int? Weeks { get; set; }
+        public decimal? Weeks { get; set; }
 
-        public int? Days { get; set; }
+        public decimal? Days { get; set; }
 
-        public int? Hours { get; set; }
+        public decimal? Hours { get; set; }
 
-        public int? Minutes { get; set; }
+        public decimal? Minutes { get; set; }
 
-        public int? Seconds { get; set; }
+        public decimal? Seconds { get; set; }
 
         public int? Year { get; set; }
 
@@ -122,10 +122,10 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
                         PartOfDay = item.Value;
                         break;
                     case "dateUnit":
-                        AssignDateUnit(source);
+                        AssignDateDuration(source);
                         break;
                     case "timeUnit":
-                        AssignTimeUnit(source);
+                        AssignTimeDuration(source);
                         break;
                 }
             }
@@ -146,37 +146,37 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
             }
         }
 
-        private void AssignDateUnit(IDictionary<string, string> source)
+        private void AssignDateDuration(IDictionary<string, string> source)
         {
             switch (source["dateUnit"])
             {
                 case "Y":
-                    Years = int.Parse(source["amount"]);
+                    Years = decimal.Parse(source["amount"]);
                     break;
                 case "M":
-                    Months = int.Parse(source["amount"]);
+                    Months = decimal.Parse(source["amount"]);
                     break;
                 case "W":
-                    Weeks = int.Parse(source["amount"]);
+                    Weeks = decimal.Parse(source["amount"]);
                     break;
                 case "D":
-                    Days = int.Parse(source["amount"]);
+                    Days = decimal.Parse(source["amount"]);
                     break;
             }
         }
 
-        private void AssignTimeUnit(IDictionary<string, string> source)
+        private void AssignTimeDuration(IDictionary<string, string> source)
         {
             switch (source["timeUnit"])
             {
                 case "H":
-                    Hours = int.Parse(source["amount"]);
+                    Hours = decimal.Parse(source["amount"]);
                     break;
                 case "M":
-                    Minutes = int.Parse(source["amount"]);
+                    Minutes = decimal.Parse(source["amount"]);
                     break;
                 case "S":
-                    Seconds = int.Parse(source["amount"]);
+                    Seconds = decimal.Parse(source["amount"]);
                     break;
             }
         }

@@ -2,7 +2,7 @@
 
 namespace Microsoft.Recognizers.DataTypes.DateTime
 {
-    public class TimexInference
+    public static class TimexInference
     {
         public static HashSet<string> Infer(Timex obj)
         {
