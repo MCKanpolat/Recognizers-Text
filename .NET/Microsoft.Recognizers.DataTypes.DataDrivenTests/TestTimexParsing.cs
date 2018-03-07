@@ -1,3 +1,5 @@
+
+using System.Linq;
 using Microsoft.Recognizers.DataTypes.DateTime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,7 +12,7 @@ namespace Microsoft.Recognizers.DataTypes.DataDrivenTests
         public void CompleteDate()
         {
             var timex = new Timex("2017-05-29");
-            // TODO: timex.should.have.property('types').that.is.a('Set').that.has.keys('definite', 'date');
+            CollectionAssert.AreEquivalent(new[] { "definite", "date" }, timex.Types.ToList());
             Assert.AreEqual(2017, timex.Year);
             Assert.AreEqual(5, timex.Month);
             Assert.AreEqual(29, timex.DayOfMonth);
@@ -32,5 +34,787 @@ namespace Microsoft.Recognizers.DataTypes.DataDrivenTests
             Assert.IsNull(timex.Seconds);
             Assert.IsNull(timex.Now);
         }
+        [TestMethod]
+        public void MonthAndDayOfMonth()
+        {
+            var timex = new Timex("XXXX-12-05");
+            CollectionAssert.AreEquivalent(new[] { "date" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.AreEqual(12, timex.Month);
+            Assert.AreEqual(5, timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void DayOfWeek()
+        {
+            var timex = new Timex("XXXX-WXX-3");
+            CollectionAssert.AreEquivalent(new[] { "date" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.AreEqual(timex.DayOfWeek, 3);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void HoursMinutesAndSeconds()
+        {
+            var timex = new Timex("T17:30:05");
+            CollectionAssert.AreEquivalent(new[] { "time" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(17, timex.Hour);
+            Assert.AreEqual(30, timex.Minute);
+            Assert.AreEqual(5, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void HoursAndMinutes()
+        {
+            var timex = new Timex("T17:30");
+            CollectionAssert.AreEquivalent(new[] { "time" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(17, timex.Hour);
+            Assert.AreEqual(30, timex.Minute);
+            Assert.AreEqual(0, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Hours()
+        {
+            var timex = new Timex("T17");
+            CollectionAssert.AreEquivalent(new[] { "time" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(17, timex.Hour);
+            Assert.AreEqual(0, timex.Minute);
+            Assert.AreEqual(0, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Now()
+        {
+            var timex = new Timex("PRESENT_REF");
+            CollectionAssert.AreEquivalent(new[] { "present", "time", "date", "datetime" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.AreEqual(true, timex.Now);
+        }
+        [TestMethod]
+        public void FullDatetime()
+        {
+            var timex = new Timex("1984-01-03T18:30:45");
+            CollectionAssert.AreEquivalent(new[] { "definite", "time", "date", "datetime" }, timex.Types.ToList());
+            Assert.AreEqual(1984, timex.Year);
+            Assert.AreEqual(1, timex.Month);
+            Assert.AreEqual(3, timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(18, timex.Hour);
+            Assert.AreEqual(30, timex.Minute);
+            Assert.AreEqual(45, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void ParicularTimeOnParticularDayOfWeek()
+        {
+            var timex = new Timex("XXXX-WXX-3T16");
+            CollectionAssert.AreEquivalent(new[] { "time", "date", "datetime" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.AreEqual(3, timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(16, timex.Hour);
+            Assert.AreEqual(0, timex.Minute);
+            Assert.AreEqual(0, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Year()
+        {
+            var timex = new Timex("2016");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.AreEqual(2016, timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void SummerOf1999()
+        {
+            var timex = new Timex("1999-SU");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.AreEqual(1999, timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.AreEqual("SU", timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void YearAndWeek()
+        {
+            var timex = new Timex("2017-W37");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.AreEqual(2017, timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.AreEqual(37, timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void SeasonSummer()
+        {
+            var timex = new Timex("SU");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.AreEqual("SU", timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void SeasonWinter()
+        {
+            var timex = new Timex("WI");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.AreEqual("WI", timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void YearAndWeekend()
+        {
+            var timex = new Timex("2017-W37-WE");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.AreEqual(2017, timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.AreEqual(true, timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void May()
+        {
+            var timex = new Timex("XXXX-05");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.AreEqual(5, timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void July2020()
+        {
+            var timex = new Timex("2020-07");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.AreEqual(2020, timex.Year);
+            Assert.AreEqual(7, timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void WeekOfMonth()
+        {
+            var timex = new Timex("XXXX-01-W01");
+            CollectionAssert.AreEquivalent(new[] { "daterange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.AreEqual(1, timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.AreEqual(1, timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void WednesdayToSaturday()
+        {
+            var timex = new Timex("(XXXX-WXX-3,XXXX-WXX-6,P3D)");
+            CollectionAssert.AreEquivalent(new[] { "date", "duration", "daterange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.AreEqual(3, timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.AreEqual(3, timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Jan1ToAug5()
+        {
+            var timex = new Timex("(XXXX-01-01,XXXX-08-05,P216D)");
+            CollectionAssert.AreEquivalent(new[] { "date", "duration", "daterange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.AreEqual(1, timex.Month);
+            Assert.AreEqual(1, timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.AreEqual(216, timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Jan1ToAug5Year2015()
+        {
+            var timex = new Timex("(2015-01-01,2015-08-05,P216D)");
+            CollectionAssert.AreEquivalent(new[] { "definite", "date", "duration", "daterange" }, timex.Types.ToList());
+            Assert.AreEqual(2015, timex.Year);
+            Assert.AreEqual(1, timex.Month);
+            Assert.AreEqual(1, timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.AreEqual(216, timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void DayTime()
+        {
+            var timex = new Timex("TDT");
+            CollectionAssert.AreEquivalent(new[] { "timerange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.AreEqual("DT", timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void NightTime()
+        {
+            var timex = new Timex("TNI");
+            CollectionAssert.AreEquivalent(new[] { "timerange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.AreEqual("NI", timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Morning()
+        {
+            var timex = new Timex("TMO");
+            CollectionAssert.AreEquivalent(new[] { "timerange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.AreEqual("MO", timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Afternoon()
+        {
+            var timex = new Timex("TAF");
+            CollectionAssert.AreEquivalent(new[] { "timerange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.AreEqual("AF", timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Evening()
+        {
+            var timex = new Timex("TEV");
+            CollectionAssert.AreEquivalent(new[] { "timerange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.AreEqual("EV", timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Timerange430pmTo445pm()
+        {
+            var timex = new Timex("(T16:30,T16:45,PT15M)");
+            CollectionAssert.AreEquivalent(new[] { "time", "duration", "timerange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(16, timex.Hour);
+            Assert.AreEqual(30, timex.Minute);
+            Assert.AreEqual(0, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.AreEqual(15, timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void DateTimeRange()
+        {
+            var timex = new Timex("XXXX-WXX-5TEV");
+            CollectionAssert.AreEquivalent(new[] { "date", "timerange", "datetimerange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.AreEqual(5, timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.AreEqual("EV", timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void LastNight()
+        {
+            var timex = new Timex("2017-09-07TNI");
+            CollectionAssert.AreEquivalent(new[] { "definite", "date", "timerange", "datetimerange" }, timex.Types.ToList());
+            Assert.AreEqual(2017, timex.Year);
+            Assert.AreEqual(9, timex.Month);
+            Assert.AreEqual(7, timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.IsNull(timex.Hour);
+            Assert.IsNull(timex.Minute);
+            Assert.IsNull(timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.AreEqual("NI", timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Last5Minutes()
+        {
+            var timex = new Timex("(2017-09-08T21:19:29,2017-09-08T21:24:29,PT5M)");
+            CollectionAssert.AreEquivalent(new[] { "date", "timerange", "datetimerange", "time", "datetime", "duration", "daterange", "definite" }, timex.Types.ToList());
+            Assert.AreEqual(2017, timex.Year);
+            Assert.AreEqual(9, timex.Month);
+            Assert.AreEqual(8, timex.DayOfMonth);
+            Assert.IsNull(timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(21, timex.Hour);
+            Assert.AreEqual(19, timex.Minute);
+            Assert.AreEqual(29, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.IsNull(timex.Hours);
+            Assert.AreEqual(5, timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+        [TestMethod]
+        public void Wed4PMToSat3PM()
+        {
+            var timex = new Timex("(XXXX-WXX-3T16,XXXX-WXX-6T15,PT71H)");
+            CollectionAssert.AreEquivalent(new[] { "date", "timerange", "datetimerange", "time", "datetime", "duration", "daterange" }, timex.Types.ToList());
+            Assert.IsNull(timex.Year);
+            Assert.IsNull(timex.Month);
+            Assert.IsNull(timex.DayOfMonth);
+            Assert.AreEqual(3, timex.DayOfWeek);
+            Assert.IsNull(timex.WeekOfYear);
+            Assert.IsNull(timex.WeekOfMonth);
+            Assert.IsNull(timex.Season);
+            Assert.AreEqual(16, timex.Hour);
+            Assert.AreEqual(0, timex.Minute);
+            Assert.AreEqual(0, timex.Second);
+            Assert.IsNull(timex.Weekend);
+            Assert.IsNull(timex.PartOfDay);
+            Assert.IsNull(timex.Years);
+            Assert.IsNull(timex.Months);
+            Assert.IsNull(timex.Weeks);
+            Assert.IsNull(timex.Days);
+            Assert.AreEqual(71, timex.Hours);
+            Assert.IsNull(timex.Minutes);
+            Assert.IsNull(timex.Seconds);
+            Assert.IsNull(timex.Now);
+        }
+
+        // Duration l.771 in the JavaScript
     }
 }

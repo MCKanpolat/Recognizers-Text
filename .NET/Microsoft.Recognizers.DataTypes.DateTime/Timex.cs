@@ -23,8 +23,7 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
         {
             get
             {
-                // TODO: TimexInference.Infer(this)
-                return null;
+                return TimexInference.Infer(this);
             }
         }
 
