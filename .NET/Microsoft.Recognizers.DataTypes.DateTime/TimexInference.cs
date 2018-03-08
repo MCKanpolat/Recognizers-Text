@@ -10,56 +10,56 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
 
             if (IsPresent(obj))
             {
-                types.Add("present");
+                types.Add(Constants.TimexTypes.Present);
             }
             if (IsDefinite(obj))
             {
-                types.Add("definite");
+                types.Add(Constants.TimexTypes.Definite);
             }
             if (IsDate(obj))
             {
-                types.Add("date");
+                types.Add(Constants.TimexTypes.Date);
             }
             if (IsDateRange(obj))
             {
-                types.Add("daterange");
+                types.Add(Constants.TimexTypes.DateRange);
             }
             if (IsDuration(obj))
             {
-                types.Add("duration");
+                types.Add(Constants.TimexTypes.Duration);
             }
             if (IsTime(obj))
             {
-                types.Add("time");
+                types.Add(Constants.TimexTypes.Time);
             }
             if (IsTimeRange(obj))
             {
-                types.Add("timerange");
+                types.Add(Constants.TimexTypes.TimeRange);
             }
-            if (types.Contains("present"))
+            if (types.Contains(Constants.TimexTypes.Present))
             {
-                types.Add("date");
-                types.Add("time");
+                types.Add(Constants.TimexTypes.Date);
+                types.Add(Constants.TimexTypes.Time);
             }
-            if (types.Contains("time") && types.Contains("duration"))
+            if (types.Contains(Constants.TimexTypes.Time) && types.Contains(Constants.TimexTypes.Duration))
             {
-                types.Add("timerange");
+                types.Add(Constants.TimexTypes.TimeRange);
             }
-            if (types.Contains("date") && types.Contains("time"))
+            if (types.Contains(Constants.TimexTypes.Date) && types.Contains(Constants.TimexTypes.Time))
             {
-                types.Add("datetime");
+                types.Add(Constants.TimexTypes.DateTime);
             }
-            if (types.Contains("date") && types.Contains("duration"))
+            if (types.Contains(Constants.TimexTypes.Date) && types.Contains(Constants.TimexTypes.Duration))
             {
-                types.Add("daterange");
+                types.Add(Constants.TimexTypes.DateRange);
             }
-            if (types.Contains("datetime") && types.Contains("duration"))
+            if (types.Contains(Constants.TimexTypes.DateTime) && types.Contains(Constants.TimexTypes.Duration))
             {
-                types.Add("datetimerange");
+                types.Add(Constants.TimexTypes.DateTimeRange);
             }
-            if (types.Contains("date") && types.Contains("timerange"))
+            if (types.Contains(Constants.TimexTypes.Date) && types.Contains(Constants.TimexTypes.TimeRange))
             {
-                types.Add("datetimerange");
+                types.Add(Constants.TimexTypes.DateTimeRange);
             }
             return types;
         }

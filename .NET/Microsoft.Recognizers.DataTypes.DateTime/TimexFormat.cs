@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.Recognizers.DataTypes.DateTime
+﻿namespace Microsoft.Recognizers.DataTypes.DateTime
 {
     public static class TimexFormat
     {
@@ -16,35 +12,146 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
             if ((types.Contains("datetimerange") || types.Contains("daterange") || types.Contains("timerange")) && types.Contains("duration"))
             {
                 var range = TimexHelpers.ExpandDateTimeRange(timex);
-                return "(${format(range.start)},${format(range.end)},${format(range.duration)})";
+                return $"({Format(range.Start)},{Format(range.End)},{Format(range.Duration)})";
             }
             if (types.Contains("datetimerange"))
             {
-                return "${formatDate(timex)}${formatTimeRange(timex)}";
+                return $"{FormatDate(timex)}{FormatTimeRange(timex)}";
             }
             if (types.Contains("daterange"))
             {
-                return "${formatDateRange(timex)}";
+                return $"{FormatDateRange(timex)}";
             }
             if (types.Contains("timerange"))
             {
-                return "${formatTimeRange(timex)}";
+                return $"{FormatTimeRange(timex)}";
             }
             if (types.Contains("datetime"))
             {
-                return "${formatDate(timex)}${formatTime(timex)}";
+                return $"{FormatDate(timex)}{FormatTime(timex)}";
             }
             if (types.Contains("duration"))
             {
-                return "${formatDuration(timex)}";
+                return $"{FormatDuration(timex)}";
             }
             if (types.Contains("date"))
             {
-                return "${formatDate(timex)}";
+                return $"{FormatDate(timex)}";
             }
             if (types.Contains("time"))
             {
-                return "${formatTime(timex)}";
+                return $"{FormatTime(timex)}";
+            }
+            return string.Empty;
+        }
+
+        private static string FormatDuration(Timex timex)
+        {
+            if (timex.Years != null)
+            {
+                return $"P{timex.Years}Y";
+            }
+            if (timex.Months != null)
+            {
+                return $"P{timex.Months}M";
+            }
+            if (timex.Weeks != null) {
+                return $"P{timex.Weeks}W";
+            }
+            if (timex.Days != null)
+            {
+                return $"P{timex.Days}D";
+            }
+            if (timex.Hours != null)
+            {
+                return $"PT{timex.Hours}H";
+            }
+            if (timex.Minutes != null)
+            {
+                return $"PT{timex.Minutes}M";
+            }
+            if (timex.Seconds != null)
+            {
+                return $"PT{timex.Seconds}S";
+            }
+            return string.Empty;
+        }
+
+        private static string FormatTime(Timex timex)
+        {
+            if (timex.Minute == 0 && timex.Second == 0)
+            {
+                return $"T{TimexDateHelpers.FixedFormatNumber(timex.Hour, 2)}";
+            }
+            if (timex.Second == 0)
+            {
+                return $"T{TimexDateHelpers.FixedFormatNumber(timex.Hour, 2)}:{TimexDateHelpers.FixedFormatNumber(timex.Minute, 2)}";
+            }
+            return $"T{TimexDateHelpers.FixedFormatNumber(timex.Hour, 2)}:{TimexDateHelpers.FixedFormatNumber(timex.Minute, 2)}:{TimexDateHelpers.FixedFormatNumber(timex.Second, 2)}";
+        }
+
+        private static string FormatDate(Timex timex)
+        {
+            if (timex.Year != null && timex.Month != null && timex.DayOfMonth != null)
+            {
+                return $"{TimexDateHelpers.FixedFormatNumber(timex.Year, 4)}-{TimexDateHelpers.FixedFormatNumber(timex.Month, 2)}-{TimexDateHelpers.FixedFormatNumber(timex.DayOfMonth, 2)}";
+            }
+            if (timex.Month != null && timex.DayOfMonth != null)
+            {
+                return $"XXXX-{TimexDateHelpers.FixedFormatNumber(timex.Month, 2)}-{TimexDateHelpers.FixedFormatNumber(timex.DayOfMonth, 2)}";
+            }
+            if (timex.DayOfWeek != null) 
+            {
+                return $"XXXX-WXX-{timex.DayOfWeek}";
+            }
+            return string.Empty;
+        }
+
+        private static string FormatDateRange(Timex timex)
+        {
+            if (timex.Year != null && timex.WeekOfYear != null && timex.Weekend != null)
+            {
+                return $"{TimexDateHelpers.FixedFormatNumber(timex.Year, 4)}-W{TimexDateHelpers.FixedFormatNumber(timex.WeekOfYear, 2)}-WE";
+            }
+            if (timex.Year != null && timex.WeekOfYear != null)
+            {
+                return $"{TimexDateHelpers.FixedFormatNumber(timex.Year, 4)}-W{TimexDateHelpers.FixedFormatNumber(timex.WeekOfYear, 2)}";
+            }
+            if (timex.Year != null && timex.Season != null) {
+                return $"{TimexDateHelpers.FixedFormatNumber(timex.Year, 4)}-{timex.Season}";
+            }
+            if (timex.Season != null)
+            {
+                return $"{timex.Season}";
+            }
+            if (timex.Year != null && timex.Month != null)
+            {
+                return $"{TimexDateHelpers.FixedFormatNumber(timex.Year, 4)}-{TimexDateHelpers.FixedFormatNumber(timex.Month, 2)}";
+            }
+            if (timex.Year != null)
+            {
+                return $"{TimexDateHelpers.FixedFormatNumber(timex.Year, 4)}";
+            }
+            if (timex.Month != null && timex.WeekOfMonth != null && timex.DayOfWeek != null)
+            {
+                return $"XXXX-{TimexDateHelpers.FixedFormatNumber(timex.Month, 2)}-WXX-{timex.WeekOfMonth}-{timex.DayOfWeek}";
+            }
+            if (timex.Month != null && timex.WeekOfMonth != null)
+            {
+                return $"XXXX-{TimexDateHelpers.FixedFormatNumber(timex.Month, 2)}-WXX-{timex.WeekOfMonth}";
+            }
+            if (timex.Month != null)
+            {
+                return $"XXXX-{TimexDateHelpers.FixedFormatNumber(timex.Month, 2)}";
+            }
+            return string.Empty;
+        }
+
+        private static string FormatTimeRange(Timex timex)
+        {
+            if (timex.PartOfDay != null)
+            {
+                return $"T{timex.PartOfDay}";
             }
             return string.Empty;
         }

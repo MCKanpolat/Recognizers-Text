@@ -5,17 +5,36 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
 {
     public class Timex
     {
+        public Timex()
+        {
+        }
+
         public Timex(string timex)
         {
             TimexParsing.ParseString(timex, this);
         }
 
-        public Timex TimexValue
+        public static Timex FromDate(System.DateTime date)
+        {
+            // TODO
+            return new Timex();
+        }
+        public static Timex FromDateTime(System.DateTime datetime)
+        {
+            // TODO
+            return new Timex();
+        }
+        public static Timex FromTime(Time time)
+        {
+            // TODO
+            return new Timex();
+        }
+
+        public string TimexValue
         {
             get
             {
-                // TODO: TimexFormat.Format(this)
-                return null;
+                return TimexFormat.Format(this);
             }
         }
 
@@ -37,6 +56,33 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
         {
             // TODO: TimexRelativeConvert.ConvertTimexToStringRelative(this, referenceDate)
             return null;
+        }
+
+        public Timex Clone()
+        {
+            return new Timex
+            {
+                 Now = Now,
+                 Years = Years,
+                 Months = Months,
+                 Weeks = Weeks,
+                 Days = Days,
+                 Hours = Hours,
+                 Minutes = Minutes,
+                 Seconds = Seconds,
+                 Year = Year,
+                 Month = Month,
+                 DayOfMonth = DayOfMonth,
+                 DayOfWeek = DayOfWeek,
+                 Season = Season,
+                 WeekOfYear = WeekOfYear,
+                 Weekend = Weekend,
+                 WeekOfMonth = WeekOfMonth,
+                 Hour = Hour,
+                 Minute = Minute,
+                 Second = Second,
+                 PartOfDay = PartOfDay
+            };
         }
 
         public bool? Now { get; set; }
