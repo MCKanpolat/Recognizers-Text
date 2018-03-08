@@ -16,18 +16,29 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
 
         public static Timex FromDate(System.DateTime date)
         {
-            // TODO
-            return new Timex();
+            return new Timex
+            {
+                Year = date.Year,
+                Month = date.Month,
+                DayOfMonth = date.Day
+            };
         }
         public static Timex FromDateTime(System.DateTime datetime)
         {
-            // TODO
-            return new Timex();
+            var timex = FromDate(datetime);
+            timex.Hour = datetime.Hour;
+            timex.Minute = datetime.Minute;
+            timex.Second = datetime.Second;
+            return timex;
         }
         public static Timex FromTime(Time time)
         {
-            // TODO
-            return new Timex();
+            return new Timex
+            {
+                Hour = time.Hour,
+                Minute = time.Minute,
+                Second = time.Second
+            };
         }
 
         public string TimexValue
@@ -48,14 +59,12 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
 
         public override string ToString()
         {
-            // TODO: TimexConvert.ConvertTimexToSTring(this)
-            return null;
+            return TimexConvert.ConvertTimexToString(this);
         }
 
         public string ToNaturalLanguage(System.DateTime referenceDate)
         {
-            // TODO: TimexRelativeConvert.ConvertTimexToStringRelative(this, referenceDate)
-            return null;
+            return TimexRelativeConvert.ConvertTimexToStringRelative(this, referenceDate);
         }
 
         public Timex Clone()

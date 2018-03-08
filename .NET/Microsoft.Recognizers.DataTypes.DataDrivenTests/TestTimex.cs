@@ -9,13 +9,13 @@ namespace Microsoft.Recognizers.DataTypes.DateTime.Tests
         [TestMethod]
         public void Timex_FromDate()
         {
-            Assert.AreEqual("2017-12-05", Timex.FromDate(new System.DateTime(2017, 11, 5)).TimexValue);
+            Assert.AreEqual("2017-12-05", Timex.FromDate(new System.DateTime(2017, 12, 5)).TimexValue);
         }
 
         [TestMethod]
         public void Timex_FromDateTime()
         {
-            Assert.AreEqual("2017-12-05T23:57:35", Timex.FromDateTime(new System.DateTime(2017, 11, 5, 23, 57, 35)).TimexValue);
+            Assert.AreEqual("2017-12-05T23:57:35", Timex.FromDateTime(new System.DateTime(2017, 12, 5, 23, 57, 35)).TimexValue);
         }
 
         [TestMethod]
