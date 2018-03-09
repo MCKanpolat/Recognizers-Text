@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.Recognizers.DataTypes.DateTime
+﻿namespace Microsoft.Recognizers.DataTypes.DateTime
 {
     public static class TimexConvert
     {
         public static string ConvertTimexToString(Timex timex)
         {
-            throw new NotImplementedException();
+            return TimexConvertEn.ConvertTimexToString(timex);
         }
 
-        public static string ConvertTimexSetToString(Timex timex)
+        public static string ConvertTimexSetToString(TimexSet timexSet)
         {
-            throw new NotImplementedException();
+            return TimexConvertEn.ConvertTimexSetToString(timexSet);
         }
     }
 }

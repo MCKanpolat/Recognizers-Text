@@ -8,7 +8,7 @@ namespace Microsoft.Recognizers.DataTypes.DateTime
     {
         public static string ConvertTimexToStringRelative(Timex timex, System.DateTime referenceDate)
         {
-            throw new NotImplementedException();
+            return TimexRelativeConvertEn.ConvertTimexToStringRelative(timex, referenceDate);
         }
     }
 }
