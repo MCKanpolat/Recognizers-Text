@@ -2,9 +2,9 @@
 
 namespace Microsoft.Recognizers.DataTypes.DateTime
 {
-    internal class TimexConvertEn
+    internal static class TimexConvertEn
     {
-        static string ConvertTimexToString(Timex timex)
+        public static string ConvertTimexToString(Timex timex)
         {
             var types = timex.Types.Count != 0 ? timex.Types : TimexInference.Infer(timex);
 

@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.Recognizers.DataTypes.DateTime
 {
-    internal class TimexRelativeConvertEn
+    internal static class TimexRelativeConvertEn
     {
         public static string ConvertTimexToStringRelative(Timex timex, System.DateTime date)
         {
@@ -38,25 +38,25 @@
             {
                 var timexDate = new System.DateTime(timex.Year.Value, timex.Month.Value - 1, timex.DayOfMonth.Value);
 
-                if (TimexDateHelpers.datePartEquals(timexDate, date)) {
-                    return 'today';
+                if (TimexDateHelpers.DatePartEquals(timexDate, date)) {
+                    return "today";
                 }
-                const tomorrow = timexDateHelpers.tomorrow(date);
-                if (TimexDateHelpers.datePartEquals(timexDate, tomorrow)) {
-                    return 'tomorrow';
+                var tomorrow = TimexDateHelpers.Tomorrow(date);
+                if (TimexDateHelpers.DatePartEquals(timexDate, tomorrow)) {
+                    return "tomorrow";
                 }
-                const yesterday = timexDateHelpers.yesterday(date);
-                if (TimexDateHelpers.datePartEquals(timexDate, yesterday)) {
-                    return 'yesterday';
+                var yesterday = TimexDateHelpers.Yesterday(date);
+                if (TimexDateHelpers.DatePartEquals(timexDate, yesterday)) {
+                    return "yesterday";
                 }
-                if (TimexDateHelpers.isThisWeek(timexDate, date)) {
-                    return `this ${getDateDay(timexDate.getDay())}`;
+                if (TimexDateHelpers.IsThisWeek(timexDate, date)) {
+                    return $"this {GetDateDay(timexDate.Day)}";
                 }
-                if (TimexDateHelpers.isNextWeek(timexDate, date)) {
-                    return `next ${getDateDay(timexDate.getDay())}`;
+                if (TimexDateHelpers.IsNextWeek(timexDate, date)) {
+                    return $"next {GetDateDay(timexDate.Day)}";
                 }
-                if (TimexDateHelpers.isLastWeek(timexDate, date)) {
-                    return `last ${getDateDay(timexDate.getDay())}`;
+                if (TimexDateHelpers.IsLastWeek(timexDate, date)) {
+                    return $"last {GetDateDay(timexDate.Day)}";
                 }
             }
             return TimexConvertEn.ConvertDate(timex);
@@ -69,78 +69,95 @@
 
         private static string ConvertDateRange(Timex timex, System.DateTime date)
         {
-            if ('year' in timex) {
-                const year = date.getFullYear();
-                if (timex.year === year) {
-                    if ('weekOfYear' in timex) {
-                        const thisWeek = timexDateHelpers.weekOfYear(date);
-                        if (thisWeek === timex.weekOfYear) {
-                            return timex.weekend? 'this weekend' : 'this week';
+            if (timex.Year != null)
+            {
+                var year = date.Year;
+                if (timex.Year == year) {
+                    if (timex.WeekOfYear != null)
+                    {
+                        var thisWeek = TimexDateHelpers.WeekOfYear(date);
+                        if (thisWeek == timex.WeekOfYear)
+                        {
+                            return timex.Weekend != null ? "this weekend" : "this week";
                         }
-                        if (thisWeek === timex.weekOfYear + 1) {
-                            return timex.weekend? 'last weekend' : 'last week';
+                        if (thisWeek == timex.WeekOfYear + 1)
+                        {
+                            return timex.Weekend != null ? "last weekend" : "last week";
                         }
-                        if (thisWeek === timex.weekOfYear - 1) {
-                            return timex.weekend? 'next weekend' : 'next week';
-                        }
-                    }
-                    if ('month' in timex) {
-                        const isoMonth = date.getMonth() + 1;
-                        if (timex.month === isoMonth) {
-                            return 'this month';
-                        }
-                        if (timex.month === isoMonth + 1) {
-                            return 'next month';
-                        }
-                        if (timex.month === isoMonth - 1) {
-                            return 'last month';
+                        if (thisWeek == timex.WeekOfYear - 1) {
+                            return timex.Weekend != null ? "next weekend" : "next week";
                         }
                     }
-                    return ('season' in timex) ? `this ${timexConstants.seasons[timex.season]}` : 'this year';
+                    if (timex.Month != null)
+                    {
+                        if (timex.Month == date.Month)
+                        {
+                            return "this month";
+                        }
+                        if (timex.Month == date.Month + 1)
+                        {
+                            return "next month";
+                        }
+                        if (timex.Month == date.Month - 1)
+                        {
+                            return "last month";
+                        }
+                    }
+                    return (timex.Season != null) ? $"this {TimexConstantsEn.Seasons[timex.Season]}" : "this year";
                 }
-                if (timex.year === year + 1) {
-                    return ('season' in timex) ? `next ${timexConstants.seasons[timex.season]}` : 'next year';
+                if (timex.Year == year + 1)
+                {
+                    return (timex.Season != null) ? $"next {TimexConstantsEn.Seasons[timex.Season]}" : "next year";
                 }
-                if (timex.year === year - 1) {
-                    return ('season' in timex) ? `last ${timexConstants.seasons[timex.season]}` : 'last year';
+                if (timex.Year == year - 1)
+                {
+                    return (timex.Season != null) ? $"last {TimexConstantsEn.Seasons[timex.Season]}" : "last year";
                 }
             }
-            return '';
+            return string.Empty;
         }
 
         private static string ConvertDateTimeRange(Timex timex, System.DateTime date)
         {
-            if ('year' in timex && 'month' in timex && 'dayOfMonth' in timex) {
-                const timexDate = new Date(timex.year, timex.month - 1, timex.dayOfMonth);
+            if (timex.Year != null && timex.Month != null && timex.DayOfMonth != null)
+            {
+                var timexDate = new System.DateTime(timex.Year.Value, timex.Month.Value - 1, timex.DayOfMonth.Value);
 
-                if ('partOfDay' in timex) {
-                    if (timexDateHelpers.datePartEquals(timexDate, date)) {
-                        if (timex.partOfDay === 'NI') {
-                            return 'tonight';
+                if (timex.PartOfDay != null)
+                {
+                    if (TimexDateHelpers.DatePartEquals(timexDate, date))
+                    {
+                        if (timex.PartOfDay == "NI")
+                        {
+                            return "tonight";
                         }
                         else {
-                            return `this ${timexConstants.dayParts[timex.partOfDay]}`;
+                            return $"this {TimexConstantsEn.DayParts[timex.PartOfDay]}";
                         }
                     }
-                    const tomorrow = timexDateHelpers.tomorrow(date);
-                    if (timexDateHelpers.datePartEquals(timexDate, tomorrow)) {
-                        return `tomorrow ${timexConstants.dayParts[timex.partOfDay]}`;
+                    var tomorrow = TimexDateHelpers.Tomorrow(date);
+                    if (TimexDateHelpers.DatePartEquals(timexDate, tomorrow))
+                    {
+                        return $"tomorrow {TimexConstantsEn.DayParts[timex.PartOfDay]}";
                     }
-                    const yesterday = timexDateHelpers.yesterday(date);
-                    if (timexDateHelpers.datePartEquals(timexDate, yesterday)) {
-                        return `yesterday ${timexConstants.dayParts[timex.partOfDay]}`;
-                    }
-
-                    if (timexDateHelpers.isNextWeek(timexDate, date)) {
-                        return `next ${getDateDay(timexDate.getDay())} ${timexConstants.dayParts[timex.partOfDay]}`;
+                    var yesterday = TimexDateHelpers.Yesterday(date);
+                    if (TimexDateHelpers.DatePartEquals(timexDate, yesterday))
+                    {
+                        return $"yesterday {TimexConstantsEn.DayParts[timex.PartOfDay]}";
                     }
 
-                    if (timexDateHelpers.isLastWeek(timexDate, date)) {
-                        return `last ${getDateDay(timexDate.getDay())} ${timexConstants.dayParts[timex.partOfDay]}`;
+                    if (TimexDateHelpers.IsNextWeek(timexDate, date))
+                    {
+                        return $"next {GetDateDay(timexDate.Day)} {TimexConstantsEn.DayParts[timex.PartOfDay]}";
+                    }
+
+                    if (TimexDateHelpers.IsLastWeek(timexDate, date))
+                    {
+                        return $"last {GetDateDay(timexDate.Day)} {TimexConstantsEn.DayParts[timex.PartOfDay]}";
                     }
                 }
             }
-            return '';
+            return string.Empty;
         }
     }
 }
